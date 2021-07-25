@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
 import Footer from "./components/Footer";
+import About from "./components/About";
 
 function App() {
     const [tasks, setTasks] = useState([]);
@@ -81,28 +83,38 @@ function App() {
     };
 
     return (
-        <div className="container border border-secondary rounded p-4 mt-3 mb-3">
-            <Header
-                onAdd={() => setShowAddTask(!showAddTask)}
-                showAddTask={showAddTask}
-            />
-
-            {showAddTask && <AddTask onAdd={addTask} />}
-
-            {tasks.length > 0 ? (
-                <Tasks
-                    tasks={tasks}
-                    onDelete={deleteTask}
-                    onToggle={toggleReminder}
+        <Router>
+            <div className="container border border-secondary rounded p-4 mt-3 mb-3">
+                <Header
+                    onAdd={() => setShowAddTask(!showAddTask)}
+                    showAddTask={showAddTask}
                 />
-            ) : (
-                <p className="text-secondary text-center mt-4 mb-4">
-                    No Tasks to show !
-                </p>
-            )}
 
-            <Footer />
-        </div>
+                <Route
+                    path="/"
+                    exact
+                    render={(props) => (
+                        <>
+                            {showAddTask && <AddTask onAdd={addTask} />}
+
+                            {tasks.length > 0 ? (
+                                <Tasks
+                                    tasks={tasks}
+                                    onDelete={deleteTask}
+                                    onToggle={toggleReminder}
+                                />
+                            ) : (
+                                <p className="text-secondary text-center mt-4 mb-4">
+                                    No Tasks to show !
+                                </p>
+                            )}
+                        </>
+                    )}
+                />
+                <Route path="/about" component={About} />
+                <Footer />
+            </div>
+        </Router>
     );
 }
 
