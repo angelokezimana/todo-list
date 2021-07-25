@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
         <div className="text-center">
             Copyright &copy; 2021 <br />
-            <button className="btn btn-sm btn-link">About</button>
+            <Link to="/about" className="btn btn-sm btn-link">
+                About
+            </Link>
         </div>
     );
 };
